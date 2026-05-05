@@ -1,25 +1,21 @@
 import { CopyIcon } from '@radix-ui/react-icons'
 import React, { useState } from 'react'
-import { useCopyToClipboard } from 'usehooks-ts'
 import { transformToMarkdown } from '../../utils/transformBookmarks'
+import { loadSettings } from '../../utils/settings'
 
 const App = (): JSX.Element => {
   const [isCopied, setIsCopied] = useState(false)
-  const [, copy] = useCopyToClipboard()
 
-  const handleCopy = () => {
-    chrome.bookmarks.getTree((bookmarks) => {
-      let bookmarksMd = ''
-      bookmarks.forEach((bookmark) => {
-        bookmarksMd += transformToMarkdown(bookmark, 0)
-      })
+  const handleCopy = async () => {
+    const bookmarks = await chrome.bookmarks.getTree()
+    // TODO: probably want to rename isObsidianFormat to isRawMarkdown unless I add obsidian specific functionality later (ie. inject it into default vault)
+    const { isObsidianFormat, isDoubleSpaced } = await loadSettings()
+    // TODO: add error handling here, maybe with a try/catch and some user feedback if it fails
+    const md = bookmarks.map((b) => transformToMarkdown(b, 0, isObsidianFormat, isDoubleSpaced)).join('')
+    await navigator.clipboard.writeText(md)
 
-      copy(bookmarksMd)
-      setIsCopied(true)
-      console.log('copied')
-
-      setTimeout(() => setIsCopied(false), 5000)
-    })
+    setIsCopied(true)
+    setTimeout(() => setIsCopied(false), 5000)
   }
 
   return (
@@ -27,6 +23,7 @@ const App = (): JSX.Element => {
       className="w-full h-full flex flex-col items-center justify-center text-center py-12 space-y-4 bg-gray-800 text-white"
       style={{ minWidth: 400 }}>
       <h1 className="text-2xl font-medium">Export to markdown</h1>
+
 
       <button
         className="px-3 py-1 flex items-center text-base text-white bg-blue-600 not-disabled:hover:bg-blue-700 not-disabled:hover:shadow-lg transition rounded-md focus:ring focus:outline-none disabled:opacity-70"

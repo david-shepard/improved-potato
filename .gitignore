@@ -1,6 +1,9 @@
 # Chrome extension release zip files
 releases
 
+dev.nix
+
+
 # Logs
 logs
 *.log

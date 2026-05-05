@@ -9,6 +9,8 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "strict": true,
-    "target": "es2018"
+    "target": "es2018",
+    "ignoreDeprecations": "6.0",
+    "types": ["chrome", "react", "react-dom"]
   }
 }
