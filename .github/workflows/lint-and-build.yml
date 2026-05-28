@@ -4,20 +4,30 @@ on: [push]
 
 jobs:
   build:
+    strategy:
+      matrix:
+        node-version: [24.x]
+
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v6
         with:
-          node-version: '24'
-          check-latest: true
-          cache: 'npm'
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
       - name: Install dependencies
         run: npm install
+
       - name: Verify linting
         run: npm run lint
+
       - name: Create release
         run: npm run release
+
       - uses: actions/upload-artifact@v7
         with:
           path: dist/build.zip
