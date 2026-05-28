@@ -1,9 +1,6 @@
 # Chrome extension release zip files
 releases
 
-dev.nix
-
-
 # Logs
 logs
 *.log
@@ -108,3 +105,6 @@ dist
 
 # TernJS port file
 .tern-port
+
+# local only
+scratch

@@ -6,22 +6,19 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: pnpm/action-setup@v2.0.1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          version: 6.14.7
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '14'
+          node-version: '24'
           check-latest: true
-          cache: 'pnpm'
+          cache: 'npm'
       - name: Install dependencies
-        run: pnpm i
+        run: npm install
       - name: Verify linting
-        run: pnpm lint
+        run: npm run lint
       - name: Create release
-        run: pnpm release
+        run: npm run release
       - uses: actions/upload-artifact@v7
         with:
           path: dist/build.zip
-          archive: false
+          archive: true

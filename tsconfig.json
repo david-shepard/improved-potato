@@ -3,14 +3,20 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "jsx": "react",
-    "lib": ["dom", "es2019"],
-    "module": "ESNext",
-    "moduleResolution": "node",
+    "lib": [
+      "dom",
+      "es2019"
+    ],
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "strict": true,
     "target": "es2018",
-    "ignoreDeprecations": "6.0",
-    "types": ["chrome", "react", "react-dom"]
+    "types": [
+      "chrome",
+      "react",
+      "react-dom"
+    ]
   }
 }
