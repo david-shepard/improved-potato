@@ -108,3 +108,6 @@ dist
 
 # local only
 scratch
+
+.DS_Store
+Thumbs.db

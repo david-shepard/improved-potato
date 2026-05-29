@@ -23,7 +23,7 @@ const App = (): JSX.Element => {
   const [settings, setSettings] = useState<Settings>(defaultSettings)
 
   useEffect(() => {
-    chrome.storage.local.get(Object.keys(defaultSettings), (result) => {
+    chrome.storage.local.get(Object.keys(defaultSettings), (result: Record<string, unknown>) => {
       setSettings({ ...defaultSettings, ...result })
     })
   }, [])
