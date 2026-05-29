@@ -14,8 +14,8 @@ const _escapeForObsidian = (text: string): string =>
 export const transformToMarkdown = (
   bookmark: chrome.bookmarks.BookmarkTreeNode,
   level: number,
-  isObsidianFormat: boolean = false,
-  isDoubleSpaced: boolean = false
+  isObsidianFormat = false,
+  isDoubleSpaced = false
 ): string => {
   let result = ``
   if (!bookmark.children) {

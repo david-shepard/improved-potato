@@ -22,7 +22,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "twind": "^0.16.16",
-    "webextension-polyfill": "^0.7.0"
+    "webextension-polyfill": "^0.7.0",
+    "yarn": "^1.22.22"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.8",
