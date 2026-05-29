@@ -1,64 +1,64 @@
-# TypeScript React Chrome Extension Boilerplate
+# Improved Potato
 
-A basic TypeScript React Chrome Extension boilerplate that gets you started
-quickly. It supports **TypeScript**, **JSX**, and **automatic reloading** during
-development. Twind, ESLint and Prettier included, all bundled using
-[Rollup](https://rollupjs.org/guide/en/) and
-[`rollup-plugin-chrome-extension`](https://extend-chrome.dev/rollup-plugin).
+A Chrome extension that exports your bookmarks to Markdown with a single click.
 
-This is based on [extend-chrome/ts-react-boilerplate](https://github.com/extend-chrome/ts-react-boilerplate)
+## What it does
 
-## Get Started
+Click the extension icon, hit **Copy to clipboard**, and your entire bookmark tree is converted to Markdown and ready to paste. Optionally format output for [Obsidian](https://obsidian.md/).
 
-### Using `git clone`
+## Installation
 
-Type this into your terminal:
+### From source
 
 ```sh
-git clone https://github.com/patheticGeek/pg-chrome-extention-boilerplate.git my-chrome-extension
-cd my-chrome-extension
-npm install
+git clone https://github.com/david-shepard/improved-potato.git
+cd improved-potato
+npm install --ignore-scripts && npm rebuild esbuild
 ```
 
-> 🖌️ Update your package name and version in `package.json` before you get
-> started!
+Load the extension in Chrome:
+
+1. Open `chrome://extensions`
+2. Enable **Developer mode**
+3. Click **Load unpacked** and select the `dist` folder
 
 ### Development
 
-For development with automatic reloading:
-
 ```sh
-npm run start
+npm start
 ```
 
-Open the [Extensions Dashboard](chrome://extensions), enable "Developer mode",
-click "Load unpacked", and choose the `dist` folder.
+The extension reloads automatically when you save changes in `src/`.
 
-When you make changes in `src` the background script and any content script will
-reload automatically.
-
-### Production
-
-When it's time to publish your Chrome extension, make a production build to
-submit to the Chrome Web Store. This boilerplate will use the version in
-`package.json`, unless you add a version to `src/manifest.json`.
-
-> Make sure you have updated the name and version of your extension in
-> `package.json`.
-
-Run the following line:
+### Production build
 
 ```sh
-npm run build
+npm run release
 ```
 
-This will create a ZIP file with your package name and version in the `releases`
-folder.
+Outputs a `dist/build.zip` ready for upload to the Chrome Web Store.
 
-## Source Layout
+## Options
 
-Your manifest is at `src/manifest.json`, and Rollup will bundle any files you
-include here. All the filepaths in your manifest should point to files in `src`.
+Open the extension's options page to configure:
+
+- **Format for Obsidian** — escapes special Markdown characters so links and headings render correctly in Obsidian
+- **Double spacing** — adds a blank line after each bookmark entry
+
+## Output format
+
+Bookmark folders become Markdown headings. Individual bookmarks become list items with their title linked to their URL. Top-level folders (depth 2) are wrapped in `<details>` / `<summary>` (this is customizable, see [options](./src/pages/options/App.tsx)) tags in standard mode for collapsible sections.
+
+```markdown
+## Work
+<details>
+<summary> Tools </summary>
+
+- [GitHub](https://github.com)
+- [Linear](https://linear.app)
+
+</details>
+```
 
 ## Features
 

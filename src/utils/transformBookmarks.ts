@@ -39,7 +39,9 @@ export const transformToMarkdown = (
           result += isObsidianFormat
             ? `${headingLevel} ${_escapeForObsidian(bookmark.title)}`
             : `<details>\n<summary> ${bookmark.title} </summary>`
-        else result += isObsidianFormat ? `${headingLevel} ${_escapeForObsidian(bookmark.title)}` : `${headingLevel} ${bookmark.title}`
+        else {
+          result += isObsidianFormat ? `${headingLevel} ${_escapeForObsidian(bookmark.title)}` : `${headingLevel} ${bookmark.title}`
+        }
         result += `\n`
         if (isDoubleSpaced) result += `\n`
       }
