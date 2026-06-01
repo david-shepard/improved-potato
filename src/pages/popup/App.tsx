@@ -7,11 +7,11 @@ const App = (): JSX.Element => {
   const [isCopied, setIsCopied] = useState(false)
 
   const handleCopy = async () => {
-    const bookmarks = await chrome.bookmarks.getTree()
+    const bookmarks = await browser.bookmarks.getTree()
     // TODO: probably want to rename isObsidianFormat to isRawMarkdown unless I add obsidian specific functionality later (ie. inject it into default vault)
     const { isObsidianFormat, isDoubleSpaced } = await loadSettings()
     // TODO: add error handling here, maybe with a try/catch and some user feedback if it fails
-    const md = bookmarks.map((b: chrome.bookmarks.BookmarkTreeNode) => transformToMarkdown(b, 0, isObsidianFormat, isDoubleSpaced)).join('')
+    const md = bookmarks.map((b: browser.bookmarks.BookmarkTreeNode) => transformToMarkdown(b, 0, isObsidianFormat, isDoubleSpaced)).join('')
     await navigator.clipboard.writeText(md)
 
     setIsCopied(true)

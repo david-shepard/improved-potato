@@ -23,14 +23,14 @@ const App = (): JSX.Element => {
   const [settings, setSettings] = useState<Settings>(defaultSettings)
 
   useEffect(() => {
-    chrome.storage.local.get(Object.keys(defaultSettings), (result: Record<string, unknown>) => {
-      setSettings({ ...defaultSettings, ...result })
+    browser.storage.local.get(Object.keys(defaultSettings)).then((result) => {
+      setSettings({ ...defaultSettings, ...result } as Settings)
     })
   }, [])
 
   const handleChange = (key: keyof Settings) => (e: React.ChangeEvent<HTMLInputElement>) => {
     const updated = { ...settings, [key]: e.target.checked }
-    chrome.storage.local.set(updated)
+    browser.storage.local.set(updated)
     setSettings(updated)
   }
 

@@ -7,14 +7,14 @@
       "dom",
       "es2019"
     ],
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "strict": true,
     "target": "es2018",
     "types": [
-      "chrome",
+      "firefox-webext-browser",
       "react",
       "react-dom"
     ]

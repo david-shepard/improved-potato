@@ -11,6 +11,19 @@ import replace from '@rollup/plugin-replace'
 
 const isProduction = process.env.NODE_ENV === 'production'
 
+const firefoxManifestCompat = {
+  name: 'firefox-manifest-compat',
+  generateBundle(_, bundle) {
+    const asset = bundle['manifest.json']
+    if (!asset) return
+    const manifest = JSON.parse(asset.source)
+    if (manifest.background?.service_worker) {
+      manifest.background.scripts = [manifest.background.service_worker]
+      asset.source = JSON.stringify(manifest, null, 2)
+    }
+  }
+}
+
 export default {
   input: 'src/manifest.json',
   output: {
@@ -29,6 +42,7 @@ export default {
     // Adds a Chrome extension reloader during watch mode
     // TODO: Service worker gives error
     simpleReloader(),
+    firefoxManifestCompat,
     resolve(),
     commonjs(),
     typescript(),

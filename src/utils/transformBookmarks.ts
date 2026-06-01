@@ -12,7 +12,7 @@ const _escapeForObsidian = (text: string): string =>
     .replace(/`/g, '\\`')    // inline code: `code`
 
 export const transformToMarkdown = (
-  bookmark: chrome.bookmarks.BookmarkTreeNode,
+  bookmark: browser.bookmarks.BookmarkTreeNode,
   level: number,
   isObsidianFormat = false,
   isDoubleSpaced = false
@@ -22,7 +22,8 @@ export const transformToMarkdown = (
     if (
       bookmark.title &&
       bookmark.url &&
-      !bookmark.url.startsWith('chrome://')
+      !bookmark.url.startsWith('chrome://') &&
+      !bookmark.url.startsWith('about:')
     ) {
       const title = isObsidianFormat ? _escapeForObsidian(bookmark.title) : bookmark.title
       result += `- [${title}](${bookmark.url})\n`
@@ -46,7 +47,7 @@ export const transformToMarkdown = (
         if (isDoubleSpaced) result += `\n`
       }
       result += bookmark.children
-        .map((item: chrome.bookmarks.BookmarkTreeNode) => transformToMarkdown(item, level + 1, isObsidianFormat))
+        .map((item: browser.bookmarks.BookmarkTreeNode) => transformToMarkdown(item, level + 1, isObsidianFormat))
         .join('')
       if (bookmark.title && level === 2 && !isObsidianFormat) result += `</details>`
       result += `\n\n`
