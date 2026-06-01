@@ -47,7 +47,7 @@ export const transformToMarkdown = (
         if (isDoubleSpaced) result += `\n`
       }
       result += bookmark.children
-        .map((item: browser.bookmarks.BookmarkTreeNode) => transformToMarkdown(item, level + 1, isObsidianFormat))
+        .map((item: browser.bookmarks.BookmarkTreeNode) => transformToMarkdown(item, level + 1, isObsidianFormat, isDoubleSpaced))
         .join('')
       if (bookmark.title && level === 2 && !isObsidianFormat) result += `</details>`
       result += `\n\n`
