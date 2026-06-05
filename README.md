@@ -65,6 +65,7 @@ Bookmark folders become Markdown headings. Individual bookmarks become list item
 - Uses twind for styling
 - Uses Rollup to bundle your extension
 - Chrome Extension automatic reloader
+- Firefox support added (https://github.com/david-shepard/improved-potato/commit/24599af6793b93a4bb93ff85aeb9aaebb0f8d85f)
 
 ## Resources
 
