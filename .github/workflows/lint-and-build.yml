@@ -26,6 +26,9 @@ jobs:
       - name: Verify linting
         run: npm run lint
 
+      - name: Run npm vitest
+        run: npm test -- --run
+
       - name: Create release
         run: npm run release
 

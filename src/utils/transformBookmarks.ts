@@ -1,6 +1,6 @@
 // worth noting that I saw this in various places but not sure where the source is, see url below 
 // https://github.com/search?q=escapemarkdown+language%3AJavaScript&type=code&l=JavaScript
-const _escapeForObsidian = (text: string): string =>
+const _escapeMarkdown = (text: string): string =>
   text
     .replace(/\\/g, '\\\\')  // backslash first, so we don't double-escape
     .replace(/</g, '\\<')    // html tags: Obsidian doesn't like angle brackets 
@@ -9,6 +9,7 @@ const _escapeForObsidian = (text: string): string =>
     .replace(/\*/g, '\\*')   // bold/italic: **text** or *text*
     .replace(/_/g, '\\_')    // bold/italic: __text__ or _text_
     .replace(/\[/g, '\\[')   // links: [text](url)
+    .replace(/\]/g, '\\]')
     .replace(/`/g, '\\`')    // inline code: `code`
 export const createTransformer = (options: { isObsidianFormat?: boolean; isDoubleSpaced?: boolean }) => {
   
@@ -16,7 +17,7 @@ export const createTransformer = (options: { isObsidianFormat?: boolean; isDoubl
 
   const transformToMarkdown = (
     bookmark: browser.bookmarks.BookmarkTreeNode,
-    level: number
+    level: number = 0
   ): string => {
     let result = ``
     if (!bookmark.children) {
@@ -26,7 +27,7 @@ export const createTransformer = (options: { isObsidianFormat?: boolean; isDoubl
         !bookmark.url.startsWith('chrome://') &&
         !bookmark.url.startsWith('about:')
       ) {
-        const title = isObsidianFormat ? _escapeForObsidian(bookmark.title) : bookmark.title
+        const title = _escapeMarkdown(bookmark.title)
         result += `- [${title}](${bookmark.url})\n`
         if (isDoubleSpaced) result += `\n`
       }
@@ -39,18 +40,17 @@ export const createTransformer = (options: { isObsidianFormat?: boolean; isDoubl
           // TODO: this gets messy, might want to refactor with helper functions 
           if (level === 2)
             result += isObsidianFormat
-              ? `${headingLevel} ${_escapeForObsidian(bookmark.title)}`
+              ? `${headingLevel} ${_escapeMarkdown(bookmark.title)}`
               : `<details>\n<summary> ${bookmark.title} </summary>`
           else {
-            result += isObsidianFormat ? `${headingLevel} ${_escapeForObsidian(bookmark.title)}` : `${headingLevel} ${bookmark.title}`
+            result += isObsidianFormat ? `${headingLevel} ${_escapeMarkdown(bookmark.title)}` : `${headingLevel} ${bookmark.title}`
           }
           result += `${isDoubleSpaced ? `\n\n` : `\n`}`
         }
         result += bookmark.children
-          .map((item: browser.bookmarks.BookmarkTreeNode) => transformToMarkdown(item, level + 1))
+          .map((item) => transformToMarkdown(item, level + 1))
           .join('')
         if (bookmark.title && level === 2 && !isObsidianFormat) result += `</details>`
-        // result += `${isDoubleSpaced ? `\n\n` : `\n`}`
       }
     }
     return result

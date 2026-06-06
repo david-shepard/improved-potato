@@ -16,7 +16,8 @@
     "types": [
       "firefox-webext-browser",
       "react",
-      "react-dom"
+      "react-dom",
+      "vitest/globals"
     ]
   }
 }
