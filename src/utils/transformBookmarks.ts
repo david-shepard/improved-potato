@@ -17,7 +17,7 @@ export const createTransformer = (options: { isObsidianFormat?: boolean; isDoubl
 
   const transformToMarkdown = (
     bookmark: browser.bookmarks.BookmarkTreeNode,
-    level: number = 0
+    level = 0
   ): string => {
     let result = ``
     if (!bookmark.children) {

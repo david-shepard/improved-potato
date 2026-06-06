@@ -33,6 +33,7 @@ jobs:
         run: npm run release
 
       - uses: actions/upload-artifact@v7
+        if: ${{ !env.ACT }}
         with:
           path: dist/build.zip
           archive: true
